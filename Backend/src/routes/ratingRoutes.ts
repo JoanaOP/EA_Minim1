@@ -32,32 +32,43 @@ class RatingRoutes {
 
 
     public async addRatingUser(req: Request, res: Response) : Promise<void> {
-        const {tittle, rater, userRated, rating, description} = req.body;
-        const user = await User.findById(userRated);
+        const {tittle, rating, description} = req.body;
 
-        const newRating = new Rating({tittle, rater, userRated, rating, description});
-        const savedRating = await newRating.save();
+        const rater = await User.findOne({name: req.body.rater});
+        const userRated = await User.findOne({name: req.body.userRated});
 
-        user.personalRatings.push(newRating._id);
+        if(rater==null||userRated == null){
+            res.status(404).send("Rater of user rated don't exist");
+        }
+        else{
+            const newRating = new Rating({tittle, rater, userRated, rating, description});
+            const savedRating = await newRating.save();
 
-        const userToUpdate = await User.findOneAndUpdate({ _id : userRated }, { personalRatings: user.personalRatings});
-
-        res.status(200).send('Rating added!');
+            userRated.personalRatings.push(newRating._id);
+            const userToUpdate = await User.findOneAndUpdate({ _id : userRated }, { personalRatings: userRated.personalRatings});
+            res.status(200).send('Rating added!');
+        }
     }
 
     public async addRatingActivity(req: Request, res: Response) : Promise<void> {
-        const {tittle, rater, activityRated, rating, description} = req.body;
-        const activity = await Activity.findById(activityRated);
-        console.log(activity);
+        const {tittle,  rating, description} = req.body;
 
-        const newRating = new Rating({tittle, rater, activityRated, rating, description});
-        const savedRating = await newRating.save();
+        const rater = await User.findOne({name: req.body.rater});
+        const activityRated = await Activity.findOne({name: req.body.activityRated});
 
-        activity.ratings.push(newRating._id);
+        if(rater==null || activityRated==null){
+            res.status(404).send("Rater or activity rated don't exist");
+        }
+        else{
+            const newRating = new Rating({tittle, rater, activityRated, rating, description});
+            const savedRating = await newRating.save();
 
-        const activityToUpdate = await Activity.findOneAndUpdate({ _id : activityRated }, { ratings: activity.ratings});
+            activityRated.ratings.push(newRating._id);
 
-        res.status(200).send('Rating added!');
+            const activityToUpdate = await Activity.findOneAndUpdate({ _id : activityRated }, { ratings: activityRated.ratings});
+
+            res.status(200).send('Rating added!');
+        }
     }
 
     public async updateRating(req: Request, res: Response) : Promise<void> {
