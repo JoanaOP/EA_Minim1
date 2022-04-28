@@ -21,6 +21,8 @@ import { CreateRatingsComponent } from './components/create-ratings/create-ratin
 import { ListRatingsComponent } from './components/list-ratings/list-ratings.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { ListDenunciasComponent } from './components/list-denuncias/list-denuncias.component';
+import { CreateDenunciaComponent } from './components/create-denuncia/create-denuncia.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     CreateRatingsComponent,
     ListRatingsComponent,
     ListsComponent,
-    NavigationComponent
+    NavigationComponent,
+    ListDenunciasComponent,
+    CreateDenunciaComponent
   ],
   imports: [
     BrowserModule,

@@ -56,6 +56,7 @@ export class CreateUserComponent implements OnInit {
       languages: this.userForm.get('languages')?.value.replace(/ /g, "").split(','),
       location: this.userForm.get('location')?.value.replace(/ /g, "").split(','),
       photo: this.userForm.get('photo')?.value,
+      denuncias: []
     }
 
     console.log(user);

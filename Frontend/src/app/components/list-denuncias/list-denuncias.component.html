@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="title">DENUNCIAS LIST</span>
+                    <button class="btn btn-success float-end" routerLink="/create-denuncia">New Denuncia</button>
+                    <table *ngIf="listDenuncias.length > 0" class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let denuncia of listDenuncias">
+                                <td>{{denuncia.name}}</td>
+                                <td>{{denuncia.description | truncate}}</td>
+                                <td>{{denuncia.user.name}}</td>
+                                <td>{{denuncia.date}}</td>                               
+                                <td>
+                                    <i class="fa-solid fa-pen-to-square text-primary" [routerLink]="['/edit-denuncia',denuncia.name]"></i>
+                                    <i (click)="deleteDenuncia(denuncia.name)" class="fa-solid fa-trash text-danger"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listDenuncias.length == 0">There are no denuncias yet</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
